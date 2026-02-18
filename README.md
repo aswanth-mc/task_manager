@@ -12,3 +12,6 @@ a simple task mangement application built using html,css and javascript. user ca
 - CSS3 (Flexbox)
 - JavaScript (DOM manipulation)
 
+## live link
+[[https://aswanth-mc.github.io/task_manager/]]
+
