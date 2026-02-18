@@ -11,20 +11,12 @@ form.addEventListener("submit", function (e) {
 
     if (taskText === "") return; // avoid empty tasks
 
-    // Create task item
     const li = document.createElement("li");
+    li.innerHTML = `
+        <input type="checkbox">
+        <span>${taskText}</span>
+    `;
 
-    // create checkbox
-    const checkbox =document.createElement("input");
-    checkbox.type = "checkbox";
-
-    // create task text
-    const span = document.createElement("span");
-    span.textcontent = taskText;
-
-    //append elements
-    li.appendChild(checkbox);
-    li.appendChild(span);
     taskList.appendChild(li);
 
     // Clear input
