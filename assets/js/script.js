@@ -1,40 +1,36 @@
-// Select elements
+// ===============================
+// SELECT ELEMENTS
+// ===============================
 const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
+const clearAllBtn = document.getElementById("clear-all");
 
+
+// ===============================
+// LOAD TASKS FROM LOCAL STORAGE
+// ===============================
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-// Add Task
-form.addEventListener("submit", function (e) {
-    e.preventDefault(); // prevent page reload
 
-    const taskText = input.value.trim();
-    if (taskText === "") return; // avoid empty tasks
-
-    const task ={
-        id: Date.now(),
-        text: taskText,
-        completed: false
-    };
-    tasks.push(task);
-
-    saveTasks();
-    renderTasks();
-    input.value = "";
-});
+// ===============================
+// SAVE TASKS FUNCTION
+// ===============================
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 
-    function saveTasks() {
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-
-    function renderTasks() {
+// ===============================
+// RENDER TASKS FUNCTION
+// ===============================
+function renderTasks() {
     taskList.innerHTML = "";
 
     tasks.forEach(task => {
         const li = document.createElement("li");
 
+        // Checkbox
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = task.completed;
@@ -45,6 +41,7 @@ form.addEventListener("submit", function (e) {
             renderTasks();
         });
 
+        // Task Text
         const span = document.createElement("span");
         span.textContent = task.text;
 
@@ -52,11 +49,67 @@ form.addEventListener("submit", function (e) {
             span.style.textDecoration = "line-through";
         }
 
+        // Delete Button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+
+        deleteBtn.addEventListener("click", function () {
+            deleteTask(task.id);
+        });
+
         li.appendChild(checkbox);
         li.appendChild(span);
+        li.appendChild(deleteBtn);
 
         taskList.appendChild(li);
     });
 }
 
+
+// ===============================
+// ADD TASK
+// ===============================
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const taskText = input.value.trim();
+    if (!taskText) return;
+
+    const task = {
+        id: Date.now(),
+        text: taskText,
+        completed: false
+    };
+
+    tasks.push(task);
+    saveTasks();
+    renderTasks();
+
+    input.value = "";
+});
+
+
+// ===============================
+// DELETE TASK
+// ===============================
+function deleteTask(id) {
+    tasks = tasks.filter(task => task.id !== id);
+    saveTasks();
+    renderTasks();
+}
+
+
+// ===============================
+// CLEAR ALL TASKS
+// ===============================
+clearAllBtn.addEventListener("click", function () {
+    tasks = [];
+    saveTasks();
+    renderTasks();
+});
+
+
+// ===============================
+// INITIAL RENDER ON PAGE LOAD
+// ===============================
 renderTasks();
