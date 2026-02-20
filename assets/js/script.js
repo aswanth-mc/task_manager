@@ -16,6 +16,7 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 // ===============================
 // SAVE TASKS FUNCTION
 // ===============================
+console.log("Loaded tasks:", tasks);
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
@@ -99,14 +100,6 @@ function deleteTask(id) {
 }
 
 
-// ===============================
-// CLEAR ALL TASKS
-// ===============================
-clearAllBtn.addEventListener("click", function () {
-    tasks = [];
-    saveTasks();
-    renderTasks();
-});
 
 
 // ===============================
