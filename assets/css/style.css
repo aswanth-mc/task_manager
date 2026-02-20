@@ -93,8 +93,32 @@ header h1{
 }
 
 button {
-    margin-left: 10px;
-    padding: 5px 8px;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
     cursor: pointer;
-    item-align: right;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
+
+.edit-btn {
+    background-color: #facc15;
+    color: #1f2937;
+}
+
+.edit-btn:hover {
+    background-color: #eab308;
+}
+
+/* Delete Button */
+.delete-btn {
+    background-color: #ef4444;
+    color: white;
+    
+}
+
+.delete-btn:hover {
+    background-color: #dc2626;
+}
+

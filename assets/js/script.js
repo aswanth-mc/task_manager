@@ -54,12 +54,16 @@ function renderTasks() {
         const editBtn = document.createElement("button");
         editBtn.textContent = "Edit";
 
+        editBtn.classList.add("edit-btn");
+
         editBtn.addEventListener("click", function () {
             editTask(task.id);
         });
         // Delete Button
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete";
+
+        deleteBtn.classList.add("delete-btn");
 
         deleteBtn.addEventListener("click", function () {
             deleteTask(task.id);
