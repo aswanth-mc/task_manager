@@ -50,6 +50,10 @@ function renderTasks() {
             span.style.textDecoration = "line-through";
         }
 
+        // Edit Button
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+
         // Delete Button
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete";
@@ -60,6 +64,7 @@ function renderTasks() {
 
         li.appendChild(checkbox);
         li.appendChild(span);
+        li.appendChild(editBtn);
         li.appendChild(deleteBtn);
 
         taskList.appendChild(li);
@@ -88,6 +93,30 @@ form.addEventListener("submit", function (e) {
 
     input.value = "";
 });
+
+// ===============================
+// edit TASK
+// ===============================
+function editTask(id) {
+
+    const task = tasks.find(task => task.id === id);
+
+    if (!task) return;
+
+    const newText = prompt("Edit your task:", task.text);
+
+    if (newText === null) return; // User pressed cancel
+
+    if (newText.trim() === "") {
+        alert("Task cannot be empty");
+        return;
+    }
+
+    task.text = newText.trim();
+
+    saveTasks();
+    renderTasks();
+}
 
 
 // ===============================
