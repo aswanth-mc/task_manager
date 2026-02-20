@@ -56,7 +56,7 @@ function renderTasks() {
 
         editBtn.addEventListener("click", function () {
             editTask(task.id);
-
+        });
         // Delete Button
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete";
