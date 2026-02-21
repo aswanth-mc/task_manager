@@ -128,3 +128,35 @@ button {
     background-color: #dc2626;
 }
 
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        margin: 15px;
+        border-radius: 8px;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    #task-form {
+        flex-direction: column; /* stack input and button vertically */
+    }
+
+    .add-task-btn {
+        width: 100%;       
+        margin-left: 0;
+    }
+
+    #task-list li {
+        flex-wrap: wrap;   
+        gap: 8px;
+    }
+
+    .edit-btn, .delete-btn {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+}
+
