@@ -5,6 +5,7 @@ const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
 const clearAllBtn = document.getElementById("clear-all");
+const taskcounter = document.getElementById("task-counter");
 
 
 // ===============================
@@ -136,9 +137,27 @@ function deleteTask(id) {
 }
 
 
+// ===============================
+// count TASKS
+// ===============================
+function updateTaskCounter() {
+    const totalTasks = tasks.length;
+    const completedTasks = tasks.filter(task => task.completed).length;
+    const pendingTasks = totalTasks - completedTasks;
 
+    if (totalTasks === 0) {
+        taskcounter.textContent = "No tasks yet";
+        return;
+    }
+
+    taskcounter.textContent =
+        `${totalTasks} task${totalTasks > 1 ? "s" : ""} • ` +
+        `${completedTasks} completed • ` +
+        `${pendingTasks} remaining`;
+}
 
 // ===============================
 // INITIAL RENDER ON PAGE LOAD
 // ===============================
 renderTasks();
+updateTaskCounter();
