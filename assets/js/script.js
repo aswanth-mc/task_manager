@@ -6,6 +6,7 @@ const input = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
 const clearAllBtn = document.getElementById("clear-all");
 const taskcounter = document.getElementById("task-counter");
+let currentFilter = "all";
 
 
 // ===============================
@@ -29,7 +30,16 @@ function saveTasks() {
 function renderTasks() {
     taskList.innerHTML = "";
 
-    tasks.forEach(task => {
+    // 1️⃣ Filter tasks first
+    const filteredTasks = tasks.filter(task => {
+        if (currentFilter === "active") return !task.completed;
+        if (currentFilter === "completed") return task.completed;
+        return true; // all
+    });
+
+    // 2️⃣ Loop through filtered tasks
+    filteredTasks.forEach(task => {
+
         const li = document.createElement("li");
 
         // Checkbox
@@ -54,18 +64,15 @@ function renderTasks() {
         // Edit Button
         const editBtn = document.createElement("button");
         editBtn.textContent = "Edit";
-
         editBtn.classList.add("edit-btn");
-
         editBtn.addEventListener("click", function () {
             editTask(task.id);
         });
+
         // Delete Button
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete";
-
         deleteBtn.classList.add("delete-btn");
-
         deleteBtn.addEventListener("click", function () {
             deleteTask(task.id);
         });
@@ -77,6 +84,9 @@ function renderTasks() {
 
         taskList.appendChild(li);
     });
+
+    // 3️⃣ Update counter every render
+    updateTaskCounter();
 }
 
 
@@ -155,6 +165,20 @@ function updateTaskCounter() {
         `${completedTasks} completed • ` +
         `${pendingTasks} remaining`;
 }
+
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        currentFilter = btn.dataset.filter;
+
+        // Update active button style
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        renderTasks();
+    });
+});
 
 // ===============================
 // INITIAL RENDER ON PAGE LOAD
