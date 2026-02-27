@@ -4,7 +4,6 @@
 const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
-const clearAllBtn = document.getElementById("clear-all");
 const taskcounter = document.getElementById("task-counter");
 let currentFilter = "all";
 
