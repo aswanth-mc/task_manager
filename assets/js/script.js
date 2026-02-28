@@ -179,6 +179,28 @@ filterButtons.forEach(btn => {
     });
 });
 
+
+// ===============================
+// SEARCH TASKS    
+// ===============================
+const searchBtn = document.getElementById("search-btn");
+const searchInput = document.getElementById("search-input");
+
+searchBtn.addEventListener("click", () => {
+    const value = searchInput.value.toLowerCase();
+    const listItems = document.querySelectorAll("#task-list li");
+
+    listItems.forEach(li => {
+        const text = li.textContent.toLowerCase();
+
+        if (text.includes(value)) {
+            li.style.display = "flex";
+        } else {
+            li.style.display = "none";
+        }
+    });
+});
+
 // ===============================
 // INITIAL RENDER ON PAGE LOAD
 // ===============================
