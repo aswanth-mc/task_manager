@@ -10,9 +10,16 @@
 <body>
     <main class="container">
         <header>
-            <h1>ToDo List</h1>
+            <h1>Task Manager</h1>
+            <!-- Navigation Tabs -->
+            <nav class="tab-navigation">
+                <button class="tab-btn active" data-tab="todo-section">Todo List</button>
+                <button class="tab-btn" data-tab="learning-section">Learning Paths</button>
+            </nav>
         </header>
-        <div>
+
+        <!-- TODO SECTION -->
+        <section id="todo-section" class="tab-section active">
             <form action="" id="task-form">
                 <input type="text" id="task-input" placeholder="Add a new task" />
                 <button type="submit" class="add-task-btn">Add Task</button>
@@ -28,7 +35,18 @@
                 <button class="filter-btn" data-filter="completed">Completed</button>
             </div>
             <ul id="task-list"></ul>
-        </div>
+        </section>
+
+        <!-- LEARNING PATHS SECTION -->
+        <section id="learning-section" class="tab-section">
+            <form id="course-form">
+                <input type="text" id="course-input" placeholder="Add a new course (e.g., Python, React, Kotlin)" />
+                <button type="submit" class="add-course-btn">Create Course</button>
+            </form>
+            <div id="courses-container">
+                <!-- Courses will be rendered here -->
+            </div>
+        </section>
     </main>
     <script src="./assets/js/script.js"></script>
 </body> 
