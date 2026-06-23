@@ -246,6 +246,8 @@ searchBtn.addEventListener("click", () => {
 // LEARNING PATHS MODULE
 // ===============================
 const LearningPathsModule = {
+    expandedCourses: new Set(), // Track which courses are expanded
+    
     createCourse(courseName) {
         if (!courseName.trim()) return;
         
@@ -256,8 +258,9 @@ const LearningPathsModule = {
         };
         
         appState.learningPaths.push(course);
+        this.expandedCourses.add(course.id); // Auto-expand new course
         saveData();
-        this.renderCourses();
+        this.renderCourses(course.id); // Auto-focus new course input
     },
 
     deleteCourse(courseId) {
@@ -281,8 +284,9 @@ const LearningPathsModule = {
         };
         
         course.modules.push(module);
+        this.expandedCourses.add(courseId); // Keep course expanded
         saveData();
-        this.renderCourses();
+        this.renderCourses(courseId); // Auto-focus after adding module
     },
 
     deleteModule(courseId, moduleId) {
@@ -290,8 +294,9 @@ const LearningPathsModule = {
         if (!course) return;
         
         course.modules = course.modules.filter(m => m.id !== moduleId);
+        this.expandedCourses.add(courseId); // Keep course expanded
         saveData();
-        this.renderCourses();
+        this.renderCourses(courseId); // Auto-focus after deleting module
     },
 
     toggleModuleComplete(courseId, moduleId) {
@@ -302,8 +307,9 @@ const LearningPathsModule = {
         if (!module) return;
         
         module.completed = !module.completed;
+        this.expandedCourses.add(courseId); // Keep course expanded
         saveData();
-        this.renderCourses();
+        this.renderCourses(courseId); // Auto-focus after toggling
     },
 
     calculateProgress(courseId) {
@@ -314,7 +320,7 @@ const LearningPathsModule = {
         return Math.round((completed / course.modules.length) * 100);
     },
 
-    renderCourses() {
+    renderCourses(autoFocusCourseId = null) {
         const coursesContainer = document.getElementById("courses-container");
         coursesContainer.innerHTML = "";
 
@@ -387,6 +393,13 @@ const LearningPathsModule = {
             // Modules List
             const modulesList = document.createElement("div");
             modulesList.className = "modules-list";
+            
+            // Check if course should be expanded
+            if (this.expandedCourses.has(course.id)) {
+                modulesList.classList.add("visible");
+                toggleBtn.classList.add("expanded");
+                toggleBtn.textContent = "▲";
+            }
 
             course.modules.forEach(module => {
                 const moduleItem = document.createElement("div");
@@ -436,6 +449,14 @@ const LearningPathsModule = {
             addModuleForm.appendChild(moduleInput);
             addModuleForm.appendChild(addBtn);
             modulesList.appendChild(addModuleForm);
+            
+            // Auto-focus module input if this is the course to focus
+            if (autoFocusCourseId === course.id) {
+                setTimeout(() => {
+                    moduleInput.focus();
+                    moduleInput.select();
+                }, 0);
+            }
 
             // Toggle modules visibility
             toggleBtn.addEventListener("click", (e) => {
